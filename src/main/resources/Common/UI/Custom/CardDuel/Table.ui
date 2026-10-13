@@ -1,0 +1,329 @@
+// Card Duel table screen. Element ids (#Something) are the contract with
+// com.cardduel.ui.TableView (what to show) and com.cardduel.hytale.CardTablePage (which clicks to listen for).
+// If you rename an id here, rename it there too. `gradlew selfTest` checks that they still match.
+$C = "../Common.ui";
+
+@PanelBg = PatchStyle(TexturePath: "TableFelt.png");
+@CardBackTex = PatchStyle(TexturePath: "CardBack.png");
+
+@Sounds = $C.@ButtonSounds;
+
+@MinionStyle = ButtonStyle(
+  Default: (Background: #1d2b22(0.94)),
+  Hovered: (Background: #2f4a39(0.98)),
+  Pressed: (Background: #416650(1.0)),
+  Disabled: (Background: #1d2b22(0.5)),
+  Sounds: @Sounds
+);
+
+@HandStyle = ButtonStyle(
+  Default: (Background: #2a2338(0.95)),
+  Hovered: (Background: #43365e(0.98)),
+  Pressed: (Background: #5a4780(1.0)),
+  Disabled: (Background: #2a2338(0.5)),
+  Sounds: @Sounds
+);
+
+@HeroStyle = ButtonStyle(
+  Default: (Background: #3a2a1d(0.95)),
+  Hovered: (Background: #54402b(0.98)),
+  Pressed: (Background: #6d5237(1.0)),
+  Disabled: (Background: #3a2a1d(0.5)),
+  Sounds: @Sounds
+);
+
+@BarLabel = LabelStyle(FontSize: 16, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center);
+
+@BarButton = TextButtonStyle(
+  Default: (Background: #5a3d1e(0.96), LabelStyle: @BarLabel),
+  Hovered: (Background: #7a5429(0.98), LabelStyle: @BarLabel),
+  Pressed: (Background: #96692f(1.0), LabelStyle: @BarLabel),
+  Disabled: (Background: #3b2d1e(0.6), LabelStyle: @BarLabel),
+  Sounds: @Sounds
+);
+
+@MinionSlot = Button {
+  Anchor: (Width: 122, Height: 104, Right: 4);
+  LayoutMode: Top;
+  Padding: (Full: 4);
+  Style: @MinionStyle;
+  Visible: false;
+
+  Label #Name {
+    Anchor: (Height: 30);
+    Style: LabelStyle(FontSize: 13, RenderBold: true, TextColor: #ffffff, Wrap: true, HorizontalAlignment: Center);
+  }
+  Label #Stats {
+    Anchor: (Height: 28);
+    Style: LabelStyle(FontSize: 20, RenderBold: true, TextColor: #ffd75e, HorizontalAlignment: Center);
+  }
+  Label #Tags {
+    Anchor: (Height: 34);
+    Style: LabelStyle(FontSize: 11, TextColor: #b7c9bd, Wrap: true, HorizontalAlignment: Center);
+  }
+};
+
+@HandCard = Button {
+  Anchor: (Width: 168, Height: 64, Right: 4);
+  LayoutMode: Top;
+  Padding: (Horizontal: 8, Vertical: 3);
+  Style: @HandStyle;
+  Visible: false;
+
+  Label #Cost {
+    Anchor: (Height: 16);
+    Style: LabelStyle(FontSize: 13, RenderBold: true, TextColor: #7fd4ff);
+  }
+  Label #Name {
+    Anchor: (Height: 22);
+    Style: LabelStyle(FontSize: 15, RenderBold: true, TextColor: #ffffff);
+  }
+  Label #Info {
+    Anchor: (Height: 16);
+    Style: LabelStyle(FontSize: 12, TextColor: #cfc3ee);
+  }
+};
+
+@HeroBar = Button {
+  Anchor: (Height: 62);
+  LayoutMode: Top;
+  Padding: (Horizontal: 10, Vertical: 4);
+  Style: @HeroStyle;
+
+  Label #Name {
+    Anchor: (Height: 22);
+    Style: LabelStyle(FontSize: 17, RenderBold: true, TextColor: #ffffff);
+  }
+  Label #Hp {
+    Anchor: (Height: 18);
+    Style: LabelStyle(FontSize: 14, TextColor: #ffb4a8);
+  }
+  Label #Info {
+    Anchor: (Height: 16);
+    Style: LabelStyle(FontSize: 12, TextColor: #c9d6ff);
+  }
+};
+
+Group {
+  LayoutMode: Center;
+
+  Group #Panel {
+    Anchor: (Width: 1200, Height: 780);
+    Background: @PanelBg;
+    LayoutMode: Top;
+    Padding: (Full: 12);
+
+    // ============================================================ LOBBY
+    Group #Lobby {
+      LayoutMode: Top;
+      FlexWeight: 1;
+      Visible: true;
+
+      Group {
+        LayoutMode: Left;
+        Anchor: (Height: 190);
+
+        Group {
+          Anchor: (Width: 130, Height: 182, Right: 24);
+          Background: @CardBackTex;
+        }
+
+        Group {
+          LayoutMode: Top;
+          FlexWeight: 1;
+
+          Label {
+            Anchor: (Height: 56);
+            Text: "CARD DUEL";
+            Style: LabelStyle(FontSize: 44, RenderBold: true, TextColor: #ffd75e);
+          }
+          Label #LbStatus {
+            Anchor: (Height: 60);
+            Text: "";
+            Style: LabelStyle(FontSize: 20, TextColor: #ffffff, Wrap: true);
+          }
+        }
+      }
+
+      Group {
+        LayoutMode: Left;
+        Anchor: (Height: 330, Top: 10);
+
+        Group {
+          LayoutMode: Top;
+          FlexWeight: 1;
+          Padding: (Full: 14);
+          Background: #101813(0.27);
+
+          Label #LbMeName { Anchor: (Height: 30); Text: ""; Style: LabelStyle(FontSize: 22, RenderBold: true, TextColor: #ffffff); }
+          Label #LbMeDeck { Anchor: (Height: 28); Text: ""; Style: LabelStyle(FontSize: 18, RenderBold: true, TextColor: #7fd4ff); }
+          Label #LbMeInfo { Anchor: (Height: 48); Text: ""; Style: LabelStyle(FontSize: 15, TextColor: #d8e2da, Wrap: true); }
+          Label #LbMeHero { Anchor: (Height: 28); Text: ""; Style: LabelStyle(FontSize: 17, RenderBold: true, TextColor: #ffcf8a); }
+          Label #LbMePower { Anchor: (Height: 56); Text: ""; Style: LabelStyle(FontSize: 14, TextColor: #d8e2da, Wrap: true); }
+          Label #LbMeReady { Anchor: (Height: 30); Text: ""; Style: LabelStyle(FontSize: 18, RenderBold: true, TextColor: #9dff9d); }
+
+          Group {
+            LayoutMode: Left;
+            Anchor: (Height: 44, Top: 8);
+            TextButton #DeckPrev { Anchor: (Width: 150, Height: 40, Right: 8); Text: "< Previous deck"; Style: @BarButton; }
+            TextButton #DeckNext { Anchor: (Width: 150, Height: 40); Text: "Next deck >"; Style: @BarButton; }
+          }
+        }
+
+        Group {
+          LayoutMode: Top;
+          FlexWeight: 1;
+          Padding: (Full: 14);
+          Anchor: (Left: 12);
+          Background: #101813(0.27);
+
+          Label #LbOppName { Anchor: (Height: 30); Text: ""; Style: LabelStyle(FontSize: 22, RenderBold: true, TextColor: #ffffff); }
+          Label #LbOppReady { Anchor: (Height: 60); Text: ""; Style: LabelStyle(FontSize: 17, TextColor: #d8e2da, Wrap: true); }
+        }
+      }
+
+      Group {
+        LayoutMode: Left;
+        Anchor: (Height: 52, Top: 16);
+        TextButton #ReadyBtn { Anchor: (Width: 230, Height: 46, Right: 12); Text: "Ready!"; Style: @BarButton; }
+        TextButton #BotBtn { Anchor: (Width: 280, Height: 46, Right: 12); Text: "Play vs Training Bot"; Style: @BarButton; }
+        TextButton #LbLeaveBtn { Anchor: (Width: 200, Height: 46); Text: "Leave table"; Style: @BarButton; }
+      }
+
+      Label {
+        Anchor: (Height: 60, Top: 24);
+        Text: "How to play: click a card to play it. Click a minion marked * to attack, then click its target. * = ready, ! = valid target, > = selected.";
+        Style: LabelStyle(FontSize: 14, TextColor: #b7c9bd, Wrap: true);
+      }
+    }
+
+    // ============================================================ DUEL
+    Group #Duel {
+      LayoutMode: Left;
+      FlexWeight: 1;
+      Visible: false;
+
+      Group #Main {
+        LayoutMode: Top;
+        FlexWeight: 1;
+
+        // ---- opponent hero + clock
+        Group {
+          LayoutMode: Left;
+          Anchor: (Height: 66);
+          @HeroBar #OppHero { FlexWeight: 1; }
+          Label #Timer {
+            Anchor: (Width: 96, Left: 8);
+            Text: "";
+            Style: LabelStyle(FontSize: 28, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center);
+          }
+        }
+
+        // ---- opponent board
+        Group {
+          LayoutMode: Center;
+          Anchor: (Height: 108, Top: 4);
+          @MinionSlot #E0 {}
+          @MinionSlot #E1 {}
+          @MinionSlot #E2 {}
+          @MinionSlot #E3 {}
+          @MinionSlot #E4 {}
+          @MinionSlot #E5 {}
+          @MinionSlot #E6 {}
+        }
+
+        Label #Status {
+          Anchor: (Height: 28, Top: 2);
+          Text: "";
+          Style: LabelStyle(FontSize: 19, RenderBold: true, TextColor: #ffd75e, HorizontalAlignment: Center, VerticalAlignment: Center);
+        }
+        Label #Hint {
+          Anchor: (Height: 22);
+          Text: "";
+          Style: LabelStyle(FontSize: 14, TextColor: #e8f0ea, HorizontalAlignment: Center, VerticalAlignment: Center);
+        }
+
+        // ---- my board
+        Group {
+          LayoutMode: Center;
+          Anchor: (Height: 108, Top: 4);
+          @MinionSlot #M0 {}
+          @MinionSlot #M1 {}
+          @MinionSlot #M2 {}
+          @MinionSlot #M3 {}
+          @MinionSlot #M4 {}
+          @MinionSlot #M5 {}
+          @MinionSlot #M6 {}
+        }
+
+        // ---- my hero
+        Group {
+          LayoutMode: Left;
+          Anchor: (Height: 66, Top: 4);
+          @HeroBar #MeHero { FlexWeight: 1; }
+        }
+
+        // ---- action buttons
+        Group {
+          LayoutMode: Left;
+          Anchor: (Height: 44, Top: 6);
+          TextButton #PowerBtn { Anchor: (Width: 220, Height: 40, Right: 8); Text: "Hero power"; Style: @BarButton; }
+          TextButton #EndBtn { Anchor: (Width: 220, Height: 40, Right: 8); Text: "End Turn"; Style: @BarButton; }
+          TextButton #CancelBtn { Anchor: (Width: 120, Height: 40, Right: 8); Text: "Cancel"; Style: @BarButton; Visible: false; }
+          TextButton #LeaveBtn { Anchor: (Width: 220, Height: 40, Left: 20); Text: "Leave / forfeit"; Style: @BarButton; }
+        }
+
+        // ---- my hand: two rows of five
+        Group {
+          LayoutMode: Top;
+          Anchor: (Height: 140, Top: 6);
+          Group {
+            LayoutMode: Center;
+            Anchor: (Height: 68);
+            @HandCard #H0 {}
+            @HandCard #H1 {}
+            @HandCard #H2 {}
+            @HandCard #H3 {}
+            @HandCard #H4 {}
+          }
+          Group {
+            LayoutMode: Center;
+            Anchor: (Height: 68);
+            @HandCard #H5 {}
+            @HandCard #H6 {}
+            @HandCard #H7 {}
+            @HandCard #H8 {}
+            @HandCard #H9 {}
+          }
+        }
+      }
+
+      // ---- side panel: log + legend
+      Group #Side {
+        LayoutMode: Top;
+        Anchor: (Width: 280, Left: 10);
+        Padding: (Full: 10);
+        Background: #101813(0.33);
+
+        Label {
+          Anchor: (Height: 26);
+          Text: "Duel log";
+          Style: LabelStyle(FontSize: 18, RenderBold: true, TextColor: #ffd75e);
+        }
+        Label #Log0 { Anchor: (Height: 62); Text: ""; Style: LabelStyle(FontSize: 13, TextColor: #e8f0ea, Wrap: true); }
+        Label #Log1 { Anchor: (Height: 62); Text: ""; Style: LabelStyle(FontSize: 13, TextColor: #e8f0ea, Wrap: true); }
+        Label #Log2 { Anchor: (Height: 62); Text: ""; Style: LabelStyle(FontSize: 13, TextColor: #e8f0ea, Wrap: true); }
+        Label #Log3 { Anchor: (Height: 62); Text: ""; Style: LabelStyle(FontSize: 13, TextColor: #e8f0ea, Wrap: true); }
+        Label #Log4 { Anchor: (Height: 62); Text: ""; Style: LabelStyle(FontSize: 13, TextColor: #e8f0ea, Wrap: true); }
+        Label #Log5 { Anchor: (Height: 62); Text: ""; Style: LabelStyle(FontSize: 13, TextColor: #e8f0ea, Wrap: true); }
+        Label #Log6 { Anchor: (Height: 62); Text: ""; Style: LabelStyle(FontSize: 13, TextColor: #e8f0ea, Wrap: true); }
+        Label #Log7 { Anchor: (Height: 62); Text: ""; Style: LabelStyle(FontSize: 13, TextColor: #e8f0ea, Wrap: true); }
+        Label {
+          Anchor: (Height: 70, Top: 8);
+          Text: "* ready / playable   ! valid target   > selected   X replace (mulligan). Hover a card for its text.";
+          Style: LabelStyle(FontSize: 12, TextColor: #9fb3a6, Wrap: true);
+        }
+      }
+    }
+  }
+}

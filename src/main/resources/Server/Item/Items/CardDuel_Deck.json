@@ -1,0 +1,36 @@
+{
+  "TranslationProperties": {
+    "Name": "cardduel.items.CardDuel_Deck.name",
+    "Description": "cardduel.items.CardDuel_Deck.description"
+  },
+  "PlayerAnimationsId": "Block",
+  "Categories": ["Furniture.Signs"],
+  "Icon": "Icons/ItemsGenerated/CardDuel_Deck.png",
+  "MaxStack": 16,
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Cube",
+    "Textures": [
+      { "All": "BlockTextures/CardDuel_Deck.png" }
+    ],
+    "BlockParticleSetId": "Dust",
+    "BlockSoundSetId": "Cloth",
+    "PhysicalMaterialId": "Wool",
+    "ParticleColor": "#6a4fb0",
+    "Gathering": {
+      "Soft": { "IsWeaponBreakable": false }
+    },
+    "InteractionHint": "cardduel.items.CardDuel_Deck.hint",
+    "Interactions": {
+      "Use": "CardDuel_UseTable"
+    }
+  },
+  "Tags": {
+    "Type": ["Furniture"],
+    "Family": ["CardDuel"]
+  }
+}

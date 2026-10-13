@@ -1,0 +1,21 @@
+{
+    "Group": "CardDuel",
+    "Name": "CardDuel",
+    "Version": "0.1.0",
+    "Description": "Hearthstone-style card duels for two players. Place a Card Deck on a table and press F to sit down.",
+    "Authors": [
+        {
+            "Name": "Nahum"
+        }
+    ],
+    "Website": "https://hytale.com",
+    "DisabledByDefault": false,
+    "IncludesAssetPack": true,
+    "Dependencies": {
+        "Hytale:AssetModule": "*"
+    },
+    "OptionalDependencies": {
+    },
+    "ServerVersion": ">=0.7.0-pre.0 <0.8.0",
+    "Main": "com.cardduel.hytale.CardDuelPlugin"
+}
