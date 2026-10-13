@@ -42,8 +42,9 @@ repositories {
 }
 
 tasks.withType<Test>().configureEach {
-    // No JUnit tests are used in this project; avoid Gradle-version-specific
-    // API calls that break the build on CI.
+    // This project does not use JUnit test discovery; disable the default Gradle test task
+    // so the build can finish without failing on "no tests found".
+    enabled = false
 }
 
 tasks.named<Jar>("jar") {
@@ -58,7 +59,6 @@ tasks.named<Jar>("jar") {
 //         isDownloadJavadoc = true
 //     }
 // }
-
 
 // ---------------------------------------------------------------------------------------------------------------
 // `gradlew selfTest` runs the dependency-free test suites (rules engine, rooms, screen ids, 3000 bot games and
