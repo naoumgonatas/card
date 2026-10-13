@@ -41,6 +41,13 @@ repositories {
     mavenCentral()
 }
 
+tasks.withType<Test>().configureEach {
+    // This project runs custom self-test entrypoints instead of JUnit tests.
+    // Do not fail the build when no JUnit tests are discovered.
+    failOnNoMatchingTests = false
+    failWhenNoTests = false
+}
+
 tasks.named<Jar>("jar") {
     archiveBaseName.set(project.property("mod_name").toString())
     archiveVersion.set(project.property("version").toString())
