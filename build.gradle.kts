@@ -44,8 +44,8 @@ repositories {
 tasks.withType<Test>().configureEach {
     // This project runs custom self-test entrypoints instead of JUnit tests.
     // Do not fail the build when no JUnit tests are discovered.
-    failOnNoMatchingTests = false
-    failWhenNoTests = false
+    setFailOnNoMatchingTests(false)
+    setFailWhenNoTests(false)
 }
 
 tasks.named<Jar>("jar") {
