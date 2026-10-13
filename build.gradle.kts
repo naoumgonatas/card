@@ -42,16 +42,8 @@ repositories {
 }
 
 tasks.withType<Test>().configureEach {
-    // This project runs custom self-test entrypoints instead of JUnit tests.
-    // The Gradle API exposed by this project does not include these methods at compile time,
-    // so use reflection to call them only when present.
-    val task = this
-    for (methodName in listOf("setFailOnNoMatchingTests", "setFailWhenNoTests")) {
-        val method = task.javaClass.methods.firstOrNull { it.name == methodName && it.parameterCount == 1 }
-        if (method != null) {
-            method.invoke(task, false)
-        }
-    }
+    // No JUnit tests are used in this project; avoid Gradle-version-specific
+    // API calls that break the build on CI.
 }
 
 tasks.named<Jar>("jar") {
